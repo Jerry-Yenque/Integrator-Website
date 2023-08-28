@@ -1,0 +1,41 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Login
+        link(rel="stylesheet", href="/css/bootstrap.css")
+    body(class='bg-secondary') 
+        div(id="layoutAuthentication")
+            div(id="layoutAuthentication_content")
+                main
+                    .container
+                        div(class="row justify-content-center")
+                            .col-lg-5
+                                div(class="card shadow-lg border-0 rounded-lg mt-5")
+                                    .card-header
+                                        h3(class="text-center font-weight-light my-4") Login
+                                    .card-body
+                                        form(action='/validarLogin' method="POST")
+                                            div(class="form-floating mb-3")
+                                                input(class="form-control" id="inputUserName" name="inputUserName" type="text" placeholder="Ingrese su nombre de usuario")
+                                                label(for="inputUserName") Correo
+                                            div(class="form-floating mb-3")
+                                                input(class="form-control" id="inputClave" name="inputClave" type="password" placeholder="Ingrese su contraseña")
+                                                label(for="inputClave") Contraseña
+                                            div(class="d-flex align-items-right justify-content-between mt-4 mb-0")
+                                                a(class="small")
+                                                button(class="btn btn-primary" type="submit") Login
+                                                
+                                                
+                                            
+                                       
+
+            
+            footer(class="py-4 bg-light mt-auto")
+                div(class="container-fluid px-4")
+                    div(class="d-flex align-items-center justify-content-between small")
+                        div(class="text-muted") Copyright &copy; Yenque Team #{actualYear}
+
+            
