@@ -1,0 +1,93 @@
+extends ./layouts/master
+
+block contenido
+    if cursoActual
+        h1.mt-4= cursoActual.nombre
+    else
+        h1.mt-4 Asistencias
+    .container.mb-4
+        .row
+            .col
+            .col-4
+                .dropdown
+                    button#dropdownMenuButton1.btn.btn-secondary.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                        | Elija el curso
+                    ul.dropdown-menu(aria-labelledby='dropdownMenuButton1')
+                        each curso in cursos
+                            li
+                                a.dropdown-item(href=`/attendance/${curso.codigo}`)= curso.nombre
+                        //- li
+                        //- a.dropdown-item(href='#') Action
+    div(class="card mb-4")
+        div(class="card-header")
+            i(class="fas fa-table me-1")
+            | #{pagina}
+        div(class="card-body")
+            if cursoActual != undefined
+                h3 Resumen:
+                p(style="font-size: 20px;") 
+                    |  El curso tiene un total de #{cursoActual.totalAsistencias} de #{attendances.length} Asistencias.
+            table(id="datatablesSimple" class='table table-striped')
+                thead 
+                    tr
+                        th Selfie
+                        th Codigo
+                        th Nombre
+                        if estudiantes != undefined
+                            each asistencia in estudiantes[0].attendances
+                                th= asistencia.fecha
+                        //- if cursoActual != undefined
+                            //- for semana in [...Array(cursoActual.semanas * cursoActual.diasPorSemana).keys()]
+                            //-     th Dia #{semana +1}
+                        th total
+                    //- Version 1
+                    //-     th(rowspan="2") Selfie
+                    //-     th(rowspan="2") Codigo
+                    //-     th(rowspan="2") Nombre
+                    //-     if cursoActual != undefined
+                    //-         for semana in [...Array(cursoActual.semanas).keys()]
+                    //-             th(colspan=cursoActual.diasPorSemana) Semana #{semana +1}
+                    //-     th(rowspan="2") total
+                    //- tr
+                    //-     if cursoActual != undefined
+                    //-         for semana in [...Array(cursoActual.semanas).keys()]
+                    //-             th Dia 1
+                    //-             th Dia 2
+                    //- end Version 1
+                tfoot 
+                    th Selfie
+                    th Codigo
+                    th Nombre
+                    if cursoActual != undefined
+                        for semana in [...Array(cursoActual.semanas).keys()]
+                            th(colspan=cursoActual.diasPorSemana) Semana #{semana +1}
+                    th total
+                    //- tr 
+                    //-     th(rowspan="2") Selfie
+                    //-     1th(rowspan="2") Codigo
+                    //-     th(rowspan="2") Nombre
+                    //-     if cursoActual != undefined
+                    //-         for semana in [...Array(cursoActual.semanas).keys()]
+                    //-             th(colspan=cursoActual.diasPorSemana) Semana #{semana +1}
+                    //-     th(rowspan="2") total
+                    //- tr
+                    //-     for semana in [...Array(cursoActual.semanas).keys()]
+                    //-         th Dia 
+                    //-         th Dia 2
+                tbody
+                    if estudiantes != undefined
+                        each estudiante in estudiantes
+                            tr 
+                                td
+                                    img(src=estudiante.attendances[0].image, height="80", width="60")
+                                td= estudiante.codigo
+                                td= (estudiante.nombre + " " + estudiante.apellidoPaterno)
+                                each asistencia in estudiante.attendances
+                                    td= +asistencia.asistio
+                                //- td= estudiante.attendances.filter(asistencia => asistencia.asistio).length
+                                td #{estudiante.totalAsistencias}
+                                //- td= attendance.lat
+                                //- td= attendance.lon
+
+    script(src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous")
+    script(src="/js/datatables-simple-demo.js")

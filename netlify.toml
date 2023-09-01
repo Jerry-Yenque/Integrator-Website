@@ -1,13 +1,15 @@
 [build]
   command = "npm install"
   functions = "functions"
+  publish = "/"
 [functions]
   external_node_modules = ["express", "pug"]
   node_bundler = "esbuild"
-  included_files = ["views/*.pug"]
+  included_files = ["views/**/*.pug", "public/**/*"]
 [[redirects]]
   force = true
   from = "/*"
   status = 200
   to = "/.netlify/functions/api/:splat"
+
 

@@ -2,7 +2,7 @@
   "name": "integrator-website",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "functions/api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "firebase": "^10.3.0",
     "netlify-cli": "^16.1.0",
     "pug": "^3.0.2",
     "serverless-http": "^3.2.0"
