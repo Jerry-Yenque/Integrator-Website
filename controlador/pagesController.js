@@ -167,14 +167,16 @@ const pageCurso = async (req, res) => {
             "",
             false
          );
-         studentsArray[0].addAttendance(attendance);
-         studentsArray[1].addAttendance(attendance);
-         studentsArray[2].addAttendance(attendance);
-         studentsArray[3].addAttendance(attendance);
-         attendanceArray.push(attendance)
-         attendanceArray.push(attendance)
-         attendanceArray.push(attendance)
-         attendanceArray.push(attendance)
+         if (cursoActual.codigo == '101030') {
+            studentsArray[0].addAttendance(attendance);
+            studentsArray[1].addAttendance(attendance);
+            studentsArray[2].addAttendance(attendance);
+            studentsArray[3].addAttendance(attendance);
+            attendanceArray.push(attendance)
+            attendanceArray.push(attendance)
+            attendanceArray.push(attendance)
+            attendanceArray.push(attendance)
+         }
          ordenarAsistenciasPorFechaAscendente(studentsArray)
          res.render('./attendance', {
             pagina: 'Asistencias',

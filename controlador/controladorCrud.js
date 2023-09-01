@@ -1,4 +1,5 @@
 import db from "../db/db.js";
+import Personal from "../models/Personal.js"
 import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
 
 const firestore = getFirestore(db);
@@ -24,11 +25,22 @@ export const loginAcceso = async (req, res) => {
             } else {
                 querySnapshot.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
-                    console.log(doc.id, " => ", doc.data().nombre);
+                    // console.log(doc.id, " => ", doc.data().nombre);
                     if(pass == doc.data().clave) {
                         req.session.loggedin = true;
-                        req.session.name = doc.data().nombre;
-                        res.redirect('/attendances');
+                        const personal = new Personal(
+                            doc.id,
+                            doc.data().nombre,
+                            doc.data().apellidoPaterno
+                        );
+                        res.render('./attendances', {
+                            pagina: 'Asistencias',
+                            // attendances: attendanceArray,
+                            // cursos: cursosArray,
+                            // estudiantes: studentsArray,
+                            // cursoActual
+                            personal
+                         });
                     } else {
                         res.render('./login');
                     }

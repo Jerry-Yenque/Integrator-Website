@@ -25,8 +25,10 @@ block contenido
         div(class="card-body")
             if cursoActual != undefined
                 h3 Resumen:
-                p(style="font-size: 20px;") 
-                    |  El curso tiene un total de #{cursoActual.totalAsistencias} de #{attendances.length} Asistencias.
+                p(style="font-size: 20px;")
+                    | El curso tiene un total de #{estudiantes.length} Estudiantes.
+                    br
+                    | El curso tiene un total de #{cursoActual.totalAsistencias} de #{attendances.length} Asistencias.
             table(id="datatablesSimple" class='table table-striped')
                 thead 
                     tr
@@ -34,12 +36,13 @@ block contenido
                         th Codigo
                         th Nombre
                         if estudiantes != undefined
-                            each asistencia in estudiantes[0].attendances
-                                th= asistencia.fecha
+                            if estudiantes.length
+                                each asistencia in estudiantes[0].attendances
+                                    th= asistencia.fecha
                         //- if cursoActual != undefined
                             //- for semana in [...Array(cursoActual.semanas * cursoActual.diasPorSemana).keys()]
                             //-     th Dia #{semana +1}
-                        th total
+                        th Total
                     //- Version 1
                     //-     th(rowspan="2") Selfie
                     //-     th(rowspan="2") Codigo
@@ -58,10 +61,11 @@ block contenido
                     th Selfie
                     th Codigo
                     th Nombre
-                    if cursoActual != undefined
-                        for semana in [...Array(cursoActual.semanas).keys()]
-                            th(colspan=cursoActual.diasPorSemana) Semana #{semana +1}
-                    th total
+                    if estudiantes != undefined
+                        if estudiantes.length
+                            each asistencia in estudiantes[0].attendances
+                                th= asistencia.fecha
+                    th Total
                     //- tr 
                     //-     th(rowspan="2") Selfie
                     //-     1th(rowspan="2") Codigo
