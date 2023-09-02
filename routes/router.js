@@ -9,6 +9,7 @@ router.get('/', pageLogin );
 router.get('/attendance', pageAttendance);
 router.get('/logout', logout);
 router.get('/attendance/:idCurso', pageCurso);
+router.get('/control/:idCurso', pageCurso);
 router.get('/prelogin', (req, res) => {
     res.render('test');   
 });

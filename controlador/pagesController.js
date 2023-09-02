@@ -198,14 +198,26 @@ const pageCurso = async (req, res) => {
             attendanceArray.push(attendance)
          }
          ordenarAsistenciasPorFechaAscendente(studentsArray)
-         res.render('./attendance', {
-            pagina: 'Asistencias',
-            attendances: attendanceArray,
-            cursos: cursosArray,
-            estudiantes: studentsArray,
-            cursoActual,
-            usuario
-         });
+
+         if (usuario.rol == 'decanato') {
+            res.render('./control', {
+               pagina: 'Control',
+               attendances: attendanceArray,
+               cursos: cursosArray,
+               estudiantes: studentsArray,
+               cursoActual,
+               usuario
+            });
+         } else {
+            res.render('./attendance', {
+               pagina: 'Asistencias',
+               attendances: attendanceArray,
+               cursos: cursosArray,
+               estudiantes: studentsArray,
+               cursoActual,
+               usuario
+            });
+         }
       }
    } else {
       res.redirect('/')

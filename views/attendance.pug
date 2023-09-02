@@ -15,7 +15,11 @@ block contenido
                     ul.dropdown-menu(aria-labelledby='dropdownMenuButton1')
                         each curso in cursos
                             li
-                                a.dropdown-item(href=`/attendance/${curso.codigo}`)= curso.nombre
+                                if usuario.rol == 'decanato'
+                                    a.dropdown-item(href=`/control/${curso.codigo}`)= curso.nombre
+                                else 
+                                    a.dropdown-item(href=`/attendance/${curso.codigo}`)= curso.nombre
+
                         //- li
                         //- a.dropdown-item(href='#') Action
     div(class="card mb-4")

@@ -1,0 +1,64 @@
+extends ./layouts/master
+
+block contenido
+    if cursoActual
+        h1.mt-4= cursoActual.nombre
+    else
+        h1.mt-4 Asistencias
+    .container.mb-4
+        .row
+            .col
+            .col-4
+                .dropdown
+                    button#dropdownMenuButton1.btn.btn-secondary.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                        | Elija el curso
+                    ul.dropdown-menu(aria-labelledby='dropdownMenuButton1')
+                        each curso in cursos
+                            li
+                                if usuario.rol == 'decanato'
+                                    a.dropdown-item(href=`/control/${curso.codigo}`)= curso.nombre
+                                else 
+                                    a.dropdown-item(href=`/attendance/${curso.codigo}`)= curso.nombre
+
+                        //- li
+                        //- a.dropdown-item(href='#') Action
+    div(class="card mb-4")
+        div(class="card-header")
+            i(class="fas fa-table me-1")
+            | #{pagina}
+        div(class="card-body")
+            if cursoActual != undefined
+                h3 Resumen:
+                p(style="font-size: 20px;")
+                    | El curso tiene un total de #{estudiantes.length} Estudiantes.
+                    br
+                    | El curso tiene un total de #{cursoActual.totalAsistencias} de #{attendances.length} Asistencias.
+            table(id="datatablesSimple" class='table table-striped')
+                thead 
+                    tr
+                        th Alumnos
+                        th % Asistencias
+                        th % Inasistencias
+                tfoot 
+                        th Alumnos
+                        th % Asistencias
+                        th % Inasistencias
+                tbody
+                    if estudiantes != undefined
+                        tr 
+                            td= estudiantes.length
+                            if attendances.length === 0
+                                td 0%
+                            else
+                                td #{((cursoActual.totalAsistencias / attendances.length) * 100).toFixed(2)} %
+                            //- td #{(cursoActual.totalAsistencias / attendances.length) * 100} %
+                            if attendances.length === 0
+                                td 0%
+                            else
+                                td #{(100 - ((cursoActual.totalAsistencias / attendances.length) * 100)).toFixed(2)} %
+                            //- td #{(estudiantes.reduce((total, estudiante) => {return total + estudiante.totalAsistencias;}, 0) / attendances.length) * 100} %
+                            //- td #{100 - ((estudiantes.reduce((total, estudiante) => {return total + estudiante.totalAsistencias;}, 0) / attendances.length) * 100)} %
+                
+
+    script(src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous")
+    script(src="/js/datatables-simple-demo.js")
