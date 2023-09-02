@@ -32,7 +32,8 @@ export const loginAcceso = async (req, res) => {
                             doc.id,
                             doc.data().nombre,
                             doc.data().apellidoPaterno,
-                            doc.data().rol
+                            doc.data().rol,
+                            doc.data().prefijo
                         );
 
                         req.session.user = personal;

@@ -33,16 +33,16 @@ block contenido
                     | El curso tiene un total de #{estudiantes.length} Estudiantes.
                     br
                     | El curso tiene un total de #{cursoActual.totalAsistencias} de #{attendances.length} Asistencias.
-            table(id="datatablesSimple" class='table table-striped')
+            table(id=`datatablesSimple-${usuario.rol}` class='table table-striped')
                 thead 
                     tr
                         th Alumnos
                         th % Asistencias
                         th % Inasistencias
-                tfoot 
-                        th Alumnos
-                        th % Asistencias
-                        th % Inasistencias
+                //- tfoot 
+                //-         th Alumnos
+                //-         th % Asistencias
+                //-         th % Inasistencias
                 tbody
                     if estudiantes != undefined
                         tr 

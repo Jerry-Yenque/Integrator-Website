@@ -7,6 +7,21 @@ html(lang="en")
         title #{site} | #{pagina}
         link(rel="stylesheet", href="/css/bootstrap.css")
         link(rel="stylesheet", href="/css/tablestyle.css")
+        //- Added
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+        link(href='https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css' rel='stylesheet')
+        link(href='https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css' rel='stylesheet')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js')
+        script(src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js')
+        script(src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js')
+        script(src='https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js')
+        script(src='https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js')
+        script(src='https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js')
+
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js") 
+        //- end Added
     body(class="sb-nav-fixed")
         nav(class="sb-topnav navbar navbar-expand navbar-dark bg-dark")
             a
@@ -76,8 +91,8 @@ html(lang="en")
                             //-         a(class="nav-link" href="layout-static.html") Gráficos
                             //-         a(class="nav-link" href="layout-sidenav-light.html") Tablas
                     div(class="sb-sidenav-footer")
-                        div(class="small") #{nombree}Loggeado como:
-                        | #{usuario.nombre + " " + usuario.apellidoPaterno} 
+                        div(class="small") Bienvenido:
+                        | #{usuario.prefijo + " " + usuario.nombre + " " + usuario.apellidoPaterno} 
             div(id="layoutSidenav_content")
                 main
                     div(class="container-fluid px-4")
