@@ -23,13 +23,21 @@ const pageLogin = (req, res) => {
     const studentsArray = [];
     const attendanceArray = [];
     const cursosArray = [];
-    if(true) { //req.session.loggedin == 
+    const usuario = req.session.user;
+    if(req.session.loggedin == true) { //req.session.loggedin == 
        try {
-         //  const attendances = await getDocs(collection(firestore, "Asistencias"));
-         //  // const students = await firestore.collection('Asistencias');
-         //  const students = await getDocs(collection(firestore, "Estudiantes"));
-         const cursos = await getDocs(collection(firestore, "Cursos"));
-          cursos.forEach((doc) => {
+         console.log(usuario)
+         let queryCursos; 
+         if (usuario.rol == 'profesor') {
+            console.log('if');
+            console.log(usuario.id);
+            queryCursos = query(collection(firestore, "Cursos"), where("idProfesor", "==", usuario.id));
+         } else {
+            queryCursos = collection(firestore, "Cursos");
+            console.log('else');
+         }
+         queryCursos = await getDocs(queryCursos);
+         queryCursos.forEach((doc) => {
              const curso = new Curso(
                 doc.id,
                 doc.data().codigo,
@@ -74,7 +82,8 @@ const pageLogin = (req, res) => {
           res.render('./attendance', {
              pagina: 'Asistencias',
              attendances: attendanceArray,
-             cursos: cursosArray
+             cursos: cursosArray,
+             usuario
           });
        }
     } else {
@@ -89,14 +98,25 @@ const pageCurso = async (req, res) => {
    const attendanceArray = [];
    let contador = 0;
    const { idCurso } = req.params
-   if (true) { // req.session.loggedin == 
+   const usuario = req.session.user;
+   if (req.session.loggedin == true) { // req.session.loggedin == 
       try {
          const attendanceQuery = query(collection(firestore, "Asistencias"), where("idCurso", "==", idCurso));
 
          // const students = await getDocs(collection(firestore, "Estudiantes"));
 
-         const cursos = await getDocs(collection(firestore, "Cursos"));
-         cursos.forEach((doc) => {
+         let queryCursos; 
+         if (usuario.rol == 'profesor') {
+            console.log('if');
+            console.log(usuario.id);
+            queryCursos = query(collection(firestore, "Cursos"), where("idProfesor", "==", usuario.id));
+         } else {
+            queryCursos = collection(firestore, "Cursos");
+            console.log('else');
+         }
+         queryCursos = await getDocs(queryCursos);
+         // cursos = await getDocs(collection(firestore, "Cursos"));
+         queryCursos.forEach((doc) => {
             const curso = new Curso(
                doc.id,
                doc.data().codigo,
@@ -105,7 +125,7 @@ const pageCurso = async (req, res) => {
                doc.data().diasPorSemana
             );
             cursosArray.push(curso)
-            console.log(`${doc.id} => ${doc.data().nombre}`);
+            // console.log(`${doc.id} => ${doc.data().nombre}`);
          });
 
          const attendanceSnapshot = await getDocs(attendanceQuery);
@@ -183,7 +203,8 @@ const pageCurso = async (req, res) => {
             attendances: attendanceArray,
             cursos: cursosArray,
             estudiantes: studentsArray,
-            cursoActual
+            cursoActual,
+            usuario
          });
       }
    } else {

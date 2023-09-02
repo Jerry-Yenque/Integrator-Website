@@ -31,16 +31,21 @@ export const loginAcceso = async (req, res) => {
                         const personal = new Personal(
                             doc.id,
                             doc.data().nombre,
-                            doc.data().apellidoPaterno
+                            doc.data().apellidoPaterno,
+                            doc.data().rol
                         );
-                        res.render('./attendances', {
-                            pagina: 'Asistencias',
-                            // attendances: attendanceArray,
-                            // cursos: cursosArray,
-                            // estudiantes: studentsArray,
-                            // cursoActual
-                            personal
-                         });
+
+                        req.session.user = personal;
+
+                        res.redirect('/attendance');
+                        // res.render('./attendances', {
+                        //     pagina: 'Asistencias',
+                        //     // attendances: attendanceArray,
+                        //     // cursos: cursosArray,
+                        //     // estudiantes: studentsArray,
+                        //     // cursoActual
+                        //     personal
+                        //  });
                     } else {
                         res.render('./login');
                     }
