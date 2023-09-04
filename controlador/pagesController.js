@@ -24,6 +24,7 @@ const pageLogin = (req, res) => {
     const attendanceArray = [];
     const cursosArray = [];
     const usuario = req.session.user;
+    console.log(req.session.loggedin)
     if(req.session.loggedin == true) { //req.session.loggedin == 
        try {
          console.log(usuario)
@@ -176,27 +177,27 @@ const pageCurso = async (req, res) => {
          cursoActual.totalAsistencias = contador;
          
          // console.log(studentsArray)
-         const attendance = new Attendance(
-            "123",
-            "",
-            "",
-            "",
-            "04/09/2023",
-            "",
-            "",
-            "",
-            false
-         );
-         if (cursoActual.codigo == '101030') {
-            studentsArray[0].addAttendance(attendance);
-            studentsArray[1].addAttendance(attendance);
-            studentsArray[2].addAttendance(attendance);
-            studentsArray[3].addAttendance(attendance);
-            attendanceArray.push(attendance)
-            attendanceArray.push(attendance)
-            attendanceArray.push(attendance)
-            attendanceArray.push(attendance)
-         }
+         // const attendance = new Attendance(
+         //    "123",
+         //    "",
+         //    "",
+         //    "",
+         //    "04/09/2023",
+         //    "",
+         //    "",
+         //    "",
+         //    false
+         // );
+         // if (cursoActual.codigo == '101030') {
+         //    studentsArray[0].addAttendance(attendance);
+         //    studentsArray[1].addAttendance(attendance);
+         //    studentsArray[2].addAttendance(attendance);
+         //    studentsArray[3].addAttendance(attendance);
+         //    attendanceArray.push(attendance)
+         //    attendanceArray.push(attendance)
+         //    attendanceArray.push(attendance)
+         //    attendanceArray.push(attendance)
+         // }
          ordenarAsistenciasPorFechaAscendente(studentsArray)
 
          if (usuario.rol == 'decanato') {

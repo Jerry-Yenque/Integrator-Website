@@ -1,3 +1,4 @@
+/* Al parecer hay que cambiar todo de datatable a dataTable */
 .datatable-wrapper.no-header .datatable-container {
 	border-top: 1px solid #d9d9d9;
 }
@@ -33,7 +34,8 @@
 	padding: 6px 12px;
 }
 
-.datatable-info {
+/* changed to new syntax */
+.dataTables_info {
 	margin: 7px 0;
 }
 
@@ -206,4 +208,9 @@ table.datatable-table:focus tr.datatable-cursor > td:first-child {
 table.datatable-table:focus {
 	outline: solid 1px black;
     outline-offset: -1px;
+}
+
+table.dataTable thead {
+	background-color: rgb(74, 190, 123);
+	color: azure;
 }

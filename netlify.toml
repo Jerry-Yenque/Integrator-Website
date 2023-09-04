@@ -3,9 +3,9 @@
   functions = "functions"
   publish = "/"
 [functions]
-  external_node_modules = ["express", "pug"]
+  external_node_modules = ["express", "pug", "express-session"]
   node_bundler = "esbuild"
-  included_files = ["views/**/*.pug", "public/**/*"]
+  included_files = ["views/**/*.pug", "public/**/*", "controlador/**/*", "db/**/*", "models/**/*", "routes/**/*"]
 [[redirects]]
   force = true
   from = "/*"
