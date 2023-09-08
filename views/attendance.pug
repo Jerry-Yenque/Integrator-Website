@@ -44,7 +44,10 @@ block contenido
                             if estudiantes != undefined
                                 if estudiantes.length
                                     each asistencia in estudiantes[0].attendances
-                                        th= asistencia.fecha
+                                        if asistencia.fecha == cursoActual.ultimaClase
+                                            th(style="background-color: blue;")= asistencia.fecha
+                                        else
+                                            th= asistencia.fecha
                             //- if cursoActual != undefined
                                 //- for semana in [...Array(cursoActual.semanas * cursoActual.diasPorSemana).keys()]
                                 //-     th Dia #{semana +1}
@@ -90,7 +93,8 @@ block contenido
                             each estudiante in estudiantes
                                 tr 
                                     td
-                                        img(src=estudiante.attendances[0].image, height="80", width="60")
+                                        img(src=estudiante.attendances.find(asistencia => asistencia.fecha === cursoActual.ultimaClase).image, height="80", width="60")
+                                        //- img(src=estudiante.attendances[0].image, height="80", width="60")//- cursoActual.ultimaClase
                                     td= estudiante.codigo
                                     td= (estudiante.nombre + " " + estudiante.apellidoPaterno)
                                     each asistencia in estudiante.attendances

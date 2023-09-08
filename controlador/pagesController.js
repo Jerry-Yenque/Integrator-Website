@@ -44,10 +44,11 @@ const pageLogin = (req, res) => {
                 doc.data().codigo,
                 doc.data().nombre,
                 doc.data().semanas,
-                doc.data().diasPorSemana
+                doc.data().diasPorSemana,
+                doc.data().ultimaClase
                 );
                 cursosArray.push(curso)
-                console.log(`${doc.id} => ${doc.data().nombre}`); 
+                console.log(`${doc.data().nombre} => ${doc.data().ultimaClase}`); 
            });
 
          //  students.forEach((doc) => {
@@ -108,12 +109,10 @@ const pageCurso = async (req, res) => {
 
          let queryCursos; 
          if (usuario.rol == 'profesor') {
-            console.log('if');
             console.log(usuario.id);
             queryCursos = query(collection(firestore, "Cursos"), where("idProfesor", "==", usuario.id));
          } else {
             queryCursos = collection(firestore, "Cursos");
-            console.log('else');
          }
          queryCursos = await getDocs(queryCursos);
          // cursos = await getDocs(collection(firestore, "Cursos"));
@@ -123,7 +122,8 @@ const pageCurso = async (req, res) => {
                doc.data().codigo,
                doc.data().nombre,
                doc.data().semanas,
-               doc.data().diasPorSemana
+               doc.data().diasPorSemana,
+               doc.data().ultimaClase
             );
             cursosArray.push(curso)
             // console.log(`${doc.id} => ${doc.data().nombre}`);
