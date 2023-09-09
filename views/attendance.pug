@@ -30,6 +30,8 @@ block contenido
         div(class="card-body")
             if cursoActual != undefined
                 h3 Resumen:
+                if profesor != undefined
+                    p(style="font-size: 20px;") El curso tiene asignado al profesor: #{profesor.prefijo + " " + profesor.nombre + " " + profesor.apellidoPaterno}.
                 p(style="font-size: 20px;")
                     | El curso tiene un total de #{estudiantes.length} Estudiantes.
                     br

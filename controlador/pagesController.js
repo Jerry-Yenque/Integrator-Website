@@ -1,9 +1,10 @@
 import db from "../db/db.js";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, getDoc, query, where } from "firebase/firestore"; 
+import { collection, getDocs, getDoc, doc, query, where } from "firebase/firestore"; 
 import Estudiante from "../models/Estudiante.js";
 import Attendance from "../models/Attendance.js";
 import Curso from "../models/Curso.js";
+import Personal from "../models/Personal.js";
 
 
 const firestore = getFirestore(db);
@@ -50,6 +51,7 @@ const pageLogin = (req, res) => {
                 cursosArray.push(curso)
                 console.log(`${doc.data().nombre} => ${doc.data().ultimaClase}`); 
            });
+
 
          //  students.forEach((doc) => {
          //     const student = new Estudiante(
@@ -101,6 +103,7 @@ const pageCurso = async (req, res) => {
    let contador = 0;
    const { idCurso } = req.params
    const usuario = req.session.user;
+   let profesor;
    if (req.session.loggedin == true) { // req.session.loggedin == 
       try {
          const attendanceQuery = query(collection(firestore, "Asistencias"), where("idCurso", "==", idCurso));
@@ -125,11 +128,32 @@ const pageCurso = async (req, res) => {
                doc.data().diasPorSemana,
                doc.data().ultimaClase
             );
+            curso.idProfesor = doc.data().idProfesor
             cursosArray.push(curso)
-            // console.log(`${doc.id} => ${doc.data().nombre}`);
+            console.log(`${doc.id} => ${doc.data().nombre}`);
          });
 
          const attendanceSnapshot = await getDocs(attendanceQuery);
+         let queryProfesor;
+         if (usuario.rol == 'secretariado' || usuario.rol == 'decanato') {
+            console.log('curso actual', cursosArray.find(curso => curso.codigo === idCurso).idProfesor)
+            queryProfesor = doc(firestore, "Personal", cursosArray.find(curso => curso.codigo === idCurso).idProfesor);
+            const querySnapshot = await getDoc(queryProfesor);
+            // querySnapshot.forEach((doc) => {
+               const docu = querySnapshot.data()
+               console.log('doc ', docu)
+                   const personal = new Personal(
+                       docu.id,
+                       docu.nombre,
+                       docu.apellidoPaterno,
+                       docu.rol,
+                       docu.prefijo
+                   );
+               profesor = personal;
+               console.log(`Profesor: ${docu.rol} => ${docu.nombre}`);
+            // })
+                  
+         } 
          // attendanceSnapshot.forEach((doc) => {
          for (const doc of attendanceSnapshot.docs) {
             const attendance = new Attendance(
@@ -145,7 +169,8 @@ const pageCurso = async (req, res) => {
                // studentsArray.find(estudiante => estudiantes.codigo === doc.data().idEstudiante)
             );
             // attendanceArray.push(attendance)
-            console.log(`${doc.id} => ${doc.data().idEstudiante}`);
+            // console.log(`${doc.id} => ${doc.data().idEstudiante}`);
+            
             const estudiante = studentsArray.find(estudiante => estudiante.codigo === doc.data().idEstudiante);
             // console.log(estudiante)
             if (estudiante != undefined) {
@@ -175,29 +200,6 @@ const pageCurso = async (req, res) => {
       } finally {
          const cursoActual = cursosArray.find(curso => curso.codigo === idCurso)
          cursoActual.totalAsistencias = contador;
-         
-         // console.log(studentsArray)
-         // const attendance = new Attendance(
-         //    "123",
-         //    "",
-         //    "",
-         //    "",
-         //    "04/09/2023",
-         //    "",
-         //    "",
-         //    "",
-         //    false
-         // );
-         // if (cursoActual.codigo == '101030') {
-         //    studentsArray[0].addAttendance(attendance);
-         //    studentsArray[1].addAttendance(attendance);
-         //    studentsArray[2].addAttendance(attendance);
-         //    studentsArray[3].addAttendance(attendance);
-         //    attendanceArray.push(attendance)
-         //    attendanceArray.push(attendance)
-         //    attendanceArray.push(attendance)
-         //    attendanceArray.push(attendance)
-         // }
          ordenarAsistenciasPorFechaAscendente(studentsArray)
 
          if (usuario.rol == 'decanato') {
@@ -207,7 +209,8 @@ const pageCurso = async (req, res) => {
                cursos: cursosArray,
                estudiantes: studentsArray,
                cursoActual,
-               usuario
+               usuario,
+               profesor
             });
          } else {
             res.render('./attendance', {
@@ -216,7 +219,8 @@ const pageCurso = async (req, res) => {
                cursos: cursosArray,
                estudiantes: studentsArray,
                cursoActual,
-               usuario
+               usuario,
+               profesor
             });
          }
       }
@@ -228,7 +232,6 @@ const pageCurso = async (req, res) => {
 function ordenarAsistenciasPorFechaAscendente(estudiantes) {
    estudiantes.forEach(estudiante => {
      if (estudiante.attendances) {
-      console.log('entro al if')
        estudiante.attendances.sort((a, b) => {
          const fechaA = new Date(a.fecha.replace(/(\d{2})\/(\d{2})\/(\d{2})/, '$2/$1/$3'));
          const fechaB = new Date(b.fecha.replace(/(\d{2})\/(\d{2})\/(\d{2})/, '$2/$1/$3'));
