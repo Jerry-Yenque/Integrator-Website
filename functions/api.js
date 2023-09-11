@@ -37,7 +37,7 @@ api.use(express.static('public'));
 
 // let fi = "";
 
-// fs.readdir('/var/task/', (err, archivos) => {
+// fs.readdir('/var/task/public/img', (err, archivos) => {
 //   if (err) {
 //     console.error('Error al leer el directorio:', err);
 //     return;
@@ -54,7 +54,7 @@ api.use(express.static('public'));
 // router.get('/', (req, res) => res.render('login'));
 // router.get('/a', (req, res) => res.send(fi));
 // router.get('/home', (req, res) => res.render('attendance'));
-
+router.get('/t', (req, res) => res.render('test'));
 
 api.use('/', router);
 

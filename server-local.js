@@ -51,7 +51,7 @@ api.use(express.static('public'));
 
 // // Routing
 // const router = Router();
-// router.get('/', (req, res) => res.render('login'));
+router.get('/t', (req, res) => res.render('test'));
 // router.get('/a', (req, res) => res.send(fi));
 // router.get('/home', (req, res) => res.render('attendance'));
 api.use('/', router);

@@ -1,21 +1,110 @@
-table(id="datatablesSimple" class='table table-striped')
-  thead
-    tr
-      th(rowspan="2") Código
-      th(rowspan="2") Nombre
-      th(colspan="2") Semana 1
-      th(colspan="2") Semana 2
-    tr
-      th Día 1
-      th Día 2
-      th Día 1
-      th Día 2  
-  tbody 
-    tr 
-      td 1
-      td 2
-      td 3
-      td 4
-  script(src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous")
-  script(src="js/datatables-simple-demo.js")
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title UNFV
+        link(rel="stylesheet", href="/css/bootstrap.css")
+        style.
+          //- RESET
+          *,
+          *::before,
+          *::after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+          }
 
+          body {
+            font-family: 'Roboto', sans-serif;
+          }
+
+          main {
+            display: grid;
+            grid-template-rows: auto max-content;
+            grid-template-columns: 1fr 1.5fr;
+            align-items: center;
+            height: 100vh;
+            
+          }
+          .item1 {
+            grid-column: 1 / 3;
+          }
+          .content {
+            background: #f2f2f2;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            justify-content: center;
+            align-items: center;
+          }
+          .hero{
+            width: 100%;
+            height: auto;
+            text-align: center; 
+          }
+          .hero img {
+            width: 100%;
+          }
+          .header-card {
+            width: 100%;
+            height: auto;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+          }
+          .header-card form {
+            width: 350px;
+            height: auto;
+            border: 1px solid #336666;
+            padding: 1em;
+            margin: 2em;
+            border-radius: 1em;
+          }
+          .header-card form label {
+            display: block;
+            padding: 10px;
+          }
+          #loginUsuario {
+            display: block;
+            width: 100%;
+            margin: 15px;
+            padding: .7em;
+            border: none;
+            border-radius: 50px;
+            background: #153744;
+            color: #fff;
+          }
+          #loginUsuario p {
+            margin-block: 1em;
+          }
+    body
+      main
+        .content
+          .hero 
+            img(src="/img/unfv.png", alt="hero unfv")
+        .header-card 
+          h1 Bienvenido`
+          ul#myTab.nav.nav-tabs(role='tablist')
+            li.nav-item(role='presentation')
+              a.nav-link.active(data-bs-toggle='tab' href='/login' role='tab' aria-controls='home-tab-pane' aria-selected='true') Docentes
+            li.nav-item(role='presentation')
+              a.nav-link(data-bs-toggle='tab' href='/login' data-bs-target='#profile-tab-pane' type='button' role='tab' aria-controls='profile-tab-pane' aria-selected='false') Secretariado
+            li.nav-item(role='presentation')
+              a.nav-link.active(data-bs-toggle='tab' href='/login' data-bs-target='#profile-tab-pane' type='button' role='tab' aria-controls='profile-tab-pane' aria-selected='true') Decano
+          
+          .tab-content
+            #loginUsuario.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='home-tab' tabindex='0')
+              p Elija su perfil e ingrese sus datos
+
+
+
+    
+        footer(class="py-4 bg-light mt-auto border item1")
+          div(class="container-fluid px-4")
+            div(class="d-flex align-items-center justify-content-between small")
+              div(class="text-muted") Copyright &copy; Universidad Nacional Federico Villareal #{actualYear}

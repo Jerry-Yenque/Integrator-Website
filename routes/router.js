@@ -5,12 +5,12 @@ import { loginAcceso, logout } from "../controlador/controladorCrud.js";
 const router = express.Router(); 
 
 // Petición a login
-router.get('/', pageLogin );
+router.get('/login', pageLogin );
 router.get('/attendance', pageAttendance);
 router.get('/logout', logout);
 router.get('/attendance/:idCurso', pageCurso);
 router.get('/control/:idCurso', pageCurso);
-router.get('/prelogin', (req, res) => {
+router.get('/', (req, res) => {
     res.render('test');   
 });
 
