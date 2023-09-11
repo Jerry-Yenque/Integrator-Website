@@ -82,6 +82,17 @@ html(lang="en")
           #loginUsuario p {
             margin-block: 1em;
           }
+          .has-before,
+          .has-after {
+            position: relative;
+            z-index: 1;
+          }
+
+          .has-before::before,
+          .has-after::after {
+            position: absolute;
+            content: "";
+          }
     body
       main
         .content
